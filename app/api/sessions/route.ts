@@ -12,11 +12,14 @@ export async function GET(request: NextRequest) {
     if (!payload) return NextResponse.json({ error: "Invalid token" }, { status: 401 })
 
     const sessions = await readJSON("sessions.json")
-    const userSessions = sessions.filter((s: any) => s.userId === payload.id)
+    const userSessions = sessions
+      .filter((s: any) => s.userId === payload.id)
+      .sort((a: any, b: any) => new Date(b.date).getTime() - new Date(a.date).getTime())
 
     return NextResponse.json({ sessions: userSessions })
   } catch (error: any) {
-    return NextResponse.json({ error: error.message }, { status: 400 })
+    console.error("[v0] Get sessions error:", error)
+    return NextResponse.json({ error: error.message || "Failed to fetch sessions" }, { status: 400 })
   }
 }
 
@@ -30,6 +33,13 @@ export async function POST(request: NextRequest) {
 
     const body = await request.json()
     const { taskId, duration, notes } = sessionSchema.parse(body)
+
+    const tasks = await readJSON("tasks.json")
+    const task = tasks.find((t: any) => t.id === taskId && t.userId === payload.id)
+
+    if (!task) {
+      return NextResponse.json({ error: "Task not found or does not belong to you" }, { status: 404 })
+    }
 
     const sessions = await readJSON("sessions.json")
     const newSession = {
@@ -47,6 +57,8 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json(newSession, { status: 201 })
   } catch (error: any) {
-    return NextResponse.json({ error: error.message }, { status: 400 })
+    console.error("[v0] Create session error:", error)
+    const errorMessage = error.errors?.[0]?.message || error.message || "Failed to create session"
+    return NextResponse.json({ error: errorMessage }, { status: 400 })
   }
 }

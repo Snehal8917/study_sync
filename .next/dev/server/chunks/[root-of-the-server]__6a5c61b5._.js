@@ -199,19 +199,23 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$validations$2e$ts__$5
 async function GET(request) {
     try {
         const token = request.headers.get("authorization")?.replace("Bearer ", "");
+        console.log("[v0] GET /api/tasks - token exists:", !!token);
         if (!token) return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
             error: "Unauthorized"
         }, {
             status: 401
         });
         const payload = (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$jwt$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["verifyToken"])(token);
+        console.log("[v0] Token verified, userId:", payload?.id);
         if (!payload) return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
             error: "Invalid token"
         }, {
             status: 401
         });
         const tasks = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$fs$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["readJSON"])("tasks.json");
+        console.log("[v0] All tasks read:", tasks.length);
         const userTasks = tasks.filter((t)=>t.userId === payload.id);
+        console.log("[v0] User tasks filtered:", userTasks.length);
         const { searchParams } = new URL(request.url);
         const subject = searchParams.get("subject");
         const completed = searchParams.get("completed");
@@ -226,12 +230,14 @@ async function GET(request) {
         if (sort === "dueDate") {
             filtered.sort((a, b)=>new Date(a.dueDate || "").getTime() - new Date(b.dueDate || "").getTime());
         }
+        console.log("[v0] Returning filtered tasks:", filtered.length);
         return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
             tasks: filtered
         });
     } catch (error) {
+        console.error("[v0] GET tasks error:", error);
         return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
-            error: error.message
+            error: error.message || "Failed to fetch tasks"
         }, {
             status: 400
         });
@@ -240,20 +246,24 @@ async function GET(request) {
 async function POST(request) {
     try {
         const token = request.headers.get("authorization")?.replace("Bearer ", "");
+        console.log("[v0] POST /api/tasks - token exists:", !!token);
         if (!token) return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
             error: "Unauthorized"
         }, {
             status: 401
         });
         const payload = (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$jwt$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["verifyToken"])(token);
+        console.log("[v0] Token verified for creation, userId:", payload?.id);
         if (!payload) return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
             error: "Invalid token"
         }, {
             status: 401
         });
         const body = await request.json();
+        console.log("[v0] Request body:", body);
         const { title, subject, dueDate, description } = __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$validations$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["taskSchema"].parse(body);
         const tasks = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$fs$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["readJSON"])("tasks.json");
+        console.log("[v0] Read existing tasks:", tasks.length);
         const newTask = {
             id: (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$fs$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["generateId"])(),
             userId: payload.id,
@@ -266,12 +276,14 @@ async function POST(request) {
         };
         tasks.push(newTask);
         await (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$fs$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["writeJSON"])("tasks.json", tasks);
+        console.log("[v0] Task created and saved:", newTask.id);
         return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json(newTask, {
             status: 201
         });
     } catch (error) {
+        console.error("[v0] POST tasks error:", error);
         return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
-            error: error.message
+            error: error.message || "Failed to create task"
         }, {
             status: 400
         });
