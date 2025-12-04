@@ -1,129 +1,232 @@
-'use client'
+"use client"
 
-import * as React from 'react'
-import * as ToastPrimitives from '@radix-ui/react-toast'
-import { cva, type VariantProps } from 'class-variance-authority'
-import { X } from 'lucide-react'
+import { useState, useEffect } from "react"
+import { useAuth } from "@/lib/auth-context"
+import { ProtectedRoute } from "@/components/protected-route"
+import { TaskCard } from "@/components/task-card"
+import { TaskForm } from "@/components/task-form"
+import { TaskFilters } from "@/components/task-filters"
+import { Button } from "@/components/ui/button"
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
+import { Alert, AlertDescription } from "@/components/ui/alert"
+import { Plus, Sparkles, CheckCircle2 } from "lucide-react"
+import { useToast } from "@/hooks/use-toast"
 
-import { cn } from '@/lib/utils'
+interface Task {
+  id: string
+  title: string
+  subject: string
+  dueDate?: string
+  description?: string
+  completed: boolean
+}
 
-const ToastProvider = ToastPrimitives.Provider
+export default function TasksPage() {
+  const { token } = useAuth()
+  const { toast } = useToast()
+  const [tasks, setTasks] = useState<Task[]>([])
+  const [loading, setLoading] = useState(true)
+  const [openDialog, setOpenDialog] = useState(false)
+  const [editingTask, setEditingTask] = useState<Task | null>(null)
+  const [subject, setSubject] = useState("")
+  const [completed, setCompleted] = useState<string | null>(null)
 
-const ToastViewport = React.forwardRef<
-  React.ElementRef<typeof ToastPrimitives.Viewport>,
-  React.ComponentPropsWithoutRef<typeof ToastPrimitives.Viewport>
->(({ className, ...props }, ref) => (
-  <ToastPrimitives.Viewport
-    ref={ref}
-    className={cn(
-      'fixed top-0 z-[100] flex max-h-screen w-full flex-col-reverse p-4 sm:bottom-0 sm:right-0 sm:top-auto sm:flex-col md:max-w-[420px]',
-      className,
-    )}
-    {...props}
-  />
-))
-ToastViewport.displayName = ToastPrimitives.Viewport.displayName
+  useEffect(() => {
+    const initializeData = async () => {
+      try {
+        console.log("[v0] Initializing data...")
+        const response = await fetch("/api/init")
+        if (response.ok) {
+          console.log("[v0] Data initialized successfully")
+        }
+      } catch (error) {
+        console.error("[v0] Error initializing data:", error)
+      }
+    }
 
-const toastVariants = cva(
-  'group pointer-events-auto relative flex w-full items-center justify-between space-x-4 overflow-hidden rounded-md border p-6 pr-8 shadow-lg transition-all data-[swipe=cancel]:translate-x-0 data-[swipe=end]:translate-x-[var(--radix-toast-swipe-end-x)] data-[swipe=move]:translate-x-[var(--radix-toast-swipe-move-x)] data-[swipe=move]:transition-none data-[state=open]:animate-in data-[state=closed]:animate-out data-[swipe=end]:animate-out data-[state=closed]:fade-out-80 data-[state=closed]:slide-out-to-right-full data-[state=open]:slide-in-from-top-full data-[state=open]:sm:slide-in-from-bottom-full',
-  {
-    variants: {
-      variant: {
-        default: 'border bg-background text-foreground',
-        destructive:
-          'destructive group border-destructive bg-destructive text-destructive-foreground',
-      },
-    },
-    defaultVariants: {
-      variant: 'default',
-    },
-  },
-)
+    initializeData()
+  }, [])
 
-const Toast = React.forwardRef<
-  React.ElementRef<typeof ToastPrimitives.Root>,
-  React.ComponentPropsWithoutRef<typeof ToastPrimitives.Root> &
-    VariantProps<typeof toastVariants>
->(({ className, variant, ...props }, ref) => {
+  const fetchTasks = async () => {
+    setLoading(true)
+    try {
+      console.log("[v0] Fetching tasks with token:", !!token)
+      const params = new URLSearchParams()
+      if (subject) params.append("subject", subject)
+      if (completed !== null) params.append("completed", completed)
+
+      const response = await fetch(`/api/tasks?${params.toString()}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      })
+
+      console.log("[v0] Fetch response status:", response.status)
+
+      if (!response.ok) {
+        throw new Error(`Failed to fetch tasks: ${response.status}`)
+      }
+
+      const data = await response.json()
+      console.log("[v0] Tasks fetched:", data)
+      setTasks(data.tasks || [])
+    } catch (error: any) {
+      console.error("[v0] Failed to fetch tasks:", error)
+      toast({
+        variant: "destructive",
+        title: "Error",
+        description: "Failed to load tasks",
+      })
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  useEffect(() => {
+    if (token) {
+      fetchTasks()
+    }
+  }, [token, subject, completed])
+
+  const handleFormSuccess = () => {
+    setOpenDialog(false)
+    setEditingTask(null)
+    fetchTasks()
+    toast({
+      title: "Success",
+      description: editingTask ? "Task updated" : "Task created",
+    })
+  }
+
+  const handleEdit = (task: Task) => {
+    setEditingTask(task)
+    setOpenDialog(true)
+  }
+
+  const handleReset = () => {
+    setSubject("")
+    setCompleted(null)
+  }
+
+  const completedCount = tasks.filter((t) => t.completed).length
+  const progressPercent = tasks.length > 0 ? Math.round((completedCount / tasks.length) * 100) : 0
+
+  const activeTasks = tasks.filter((t) => !t.completed)
+  const showHelpTip = tasks.length > 0 && activeTasks.length === 0 && completedCount > 0
+
   return (
-    <ToastPrimitives.Root
-      ref={ref}
-      className={cn(toastVariants({ variant }), className)}
-      {...props}
-    />
+    <ProtectedRoute>
+      <div className="space-y-6">
+        <div className="flex flex-col md:flex-row md:justify-between md:items-start gap-4">
+          <div>
+            <h1 className="text-3xl font-bold">My Tasks</h1>
+            <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
+              {completedCount} of {tasks.length} completed
+            </p>
+            {tasks.length > 0 && (
+              <div className="mt-2 bg-gray-200 dark:bg-gray-700 h-2 rounded-full w-48">
+                <div
+                  className="bg-gradient-to-r from-blue-500 to-indigo-600 h-2 rounded-full transition-all"
+                  style={{ width: `${progressPercent}%` }}
+                />
+              </div>
+            )}
+          </div>
+          <Dialog open={openDialog} onOpenChange={setOpenDialog}>
+            <DialogTrigger asChild>
+              <Button onClick={() => setEditingTask(null)} className="w-full md:w-auto">
+                <Plus className="w-4 h-4 mr-2" />
+                Add Task
+              </Button>
+            </DialogTrigger>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>{editingTask ? "Edit Task" : "Create New Task"}</DialogTitle>
+              </DialogHeader>
+              <TaskForm token={token || ""} onSuccess={handleFormSuccess} editingTask={editingTask} />
+            </DialogContent>
+          </Dialog>
+        </div>
+
+        <TaskFilters
+          subject={subject}
+          onSubjectChange={setSubject}
+          completed={completed}
+          onCompletedChange={setCompleted}
+          onReset={handleReset}
+        />
+
+        {tasks.length === 0 && !loading && (
+          <Alert className="bg-blue-50 dark:bg-blue-900/30 border-blue-200 dark:border-blue-800">
+            <Sparkles className="h-4 w-4 text-blue-600" />
+            <AlertDescription className="text-blue-800 dark:text-blue-200 ml-2">
+              <strong>How to use StudySync:</strong> Click the "Add Task" button to create your first task. Then click
+              the circle icon next to any task to mark it as complete!
+            </AlertDescription>
+          </Alert>
+        )}
+
+        {showHelpTip && (
+          <Alert className="bg-green-50 dark:bg-green-900/30 border-green-200 dark:border-green-800">
+            <CheckCircle2 className="h-4 w-4 text-green-600" />
+            <AlertDescription className="text-green-800 dark:text-green-200 ml-2">
+              Great job! All tasks are completed. Create new ones to continue your study streak!
+            </AlertDescription>
+          </Alert>
+        )}
+
+        {loading ? (
+          <div className="text-center py-12 text-gray-600 dark:text-gray-400">
+            <div className="animate-spin mb-3">
+              <Sparkles className="w-8 h-8 mx-auto" />
+            </div>
+            Loading tasks...
+          </div>
+        ) : tasks.length === 0 ? (
+          <div className="text-center py-12 text-gray-600 dark:text-gray-400">
+            <div className="mb-4">
+              <Sparkles className="w-16 h-16 mx-auto opacity-30" />
+            </div>
+            <p className="text-lg font-medium">No tasks found</p>
+            <p className="text-sm mt-1">Create your first task to get started!</p>
+          </div>
+        ) : (
+          <div className="grid gap-6">
+            {activeTasks.length > 0 && (
+              <div>
+                <h2 className="text-sm font-semibold text-gray-600 dark:text-gray-400 mb-3">Active Tasks</h2>
+                <div className="space-y-3">
+                  {activeTasks.map((task) => (
+                    <TaskCard key={task.id} task={task} token={token || ""} onUpdate={fetchTasks} onEdit={handleEdit} />
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {completedCount > 0 && (
+              <div>
+                <h2 className="text-sm font-semibold text-gray-600 dark:text-gray-400 mb-3">
+                  Completed ({completedCount})
+                </h2>
+                <div className="space-y-3">
+                  {tasks
+                    .filter((t) => t.completed)
+                    .map((task) => (
+                      <TaskCard
+                        key={task.id}
+                        task={task}
+                        token={token || ""}
+                        onUpdate={fetchTasks}
+                        onEdit={handleEdit}
+                      />
+                    ))}
+                </div>
+              </div>
+            )}
+          </div>
+        )}
+      </div>
+    </ProtectedRoute>
   )
-})
-Toast.displayName = ToastPrimitives.Root.displayName
-
-const ToastAction = React.forwardRef<
-  React.ElementRef<typeof ToastPrimitives.Action>,
-  React.ComponentPropsWithoutRef<typeof ToastPrimitives.Action>
->(({ className, ...props }, ref) => (
-  <ToastPrimitives.Action
-    ref={ref}
-    className={cn(
-      'inline-flex h-8 shrink-0 items-center justify-center rounded-md border bg-transparent px-3 text-sm font-medium ring-offset-background transition-colors hover:bg-secondary focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 group-[.destructive]:border-muted/40 group-[.destructive]:hover:border-destructive/30 group-[.destructive]:hover:bg-destructive group-[.destructive]:hover:text-destructive-foreground group-[.destructive]:focus:ring-destructive',
-      className,
-    )}
-    {...props}
-  />
-))
-ToastAction.displayName = ToastPrimitives.Action.displayName
-
-const ToastClose = React.forwardRef<
-  React.ElementRef<typeof ToastPrimitives.Close>,
-  React.ComponentPropsWithoutRef<typeof ToastPrimitives.Close>
->(({ className, ...props }, ref) => (
-  <ToastPrimitives.Close
-    ref={ref}
-    className={cn(
-      'absolute right-2 top-2 rounded-md p-1 text-foreground/50 opacity-0 transition-opacity hover:text-foreground focus:opacity-100 focus:outline-none focus:ring-2 group-hover:opacity-100 group-[.destructive]:text-red-300 group-[.destructive]:hover:text-red-50 group-[.destructive]:focus:ring-red-400 group-[.destructive]:focus:ring-offset-red-600',
-      className,
-    )}
-    toast-close=""
-    {...props}
-  >
-    <X className="h-4 w-4" />
-  </ToastPrimitives.Close>
-))
-ToastClose.displayName = ToastPrimitives.Close.displayName
-
-const ToastTitle = React.forwardRef<
-  React.ElementRef<typeof ToastPrimitives.Title>,
-  React.ComponentPropsWithoutRef<typeof ToastPrimitives.Title>
->(({ className, ...props }, ref) => (
-  <ToastPrimitives.Title
-    ref={ref}
-    className={cn('text-sm font-semibold', className)}
-    {...props}
-  />
-))
-ToastTitle.displayName = ToastPrimitives.Title.displayName
-
-const ToastDescription = React.forwardRef<
-  React.ElementRef<typeof ToastPrimitives.Description>,
-  React.ComponentPropsWithoutRef<typeof ToastPrimitives.Description>
->(({ className, ...props }, ref) => (
-  <ToastPrimitives.Description
-    ref={ref}
-    className={cn('text-sm opacity-90', className)}
-    {...props}
-  />
-))
-ToastDescription.displayName = ToastPrimitives.Description.displayName
-
-type ToastProps = React.ComponentPropsWithoutRef<typeof Toast>
-
-type ToastActionElement = React.ReactElement<typeof ToastAction>
-
-export {
-  type ToastProps,
-  type ToastActionElement,
-  ToastProvider,
-  ToastViewport,
-  Toast,
-  ToastTitle,
-  ToastDescription,
-  ToastClose,
-  ToastAction,
 }

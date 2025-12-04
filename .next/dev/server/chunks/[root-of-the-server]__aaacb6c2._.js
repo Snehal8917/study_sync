@@ -123,8 +123,10 @@ async function readJSON(filename) {
     try {
         const filePath = __TURBOPACK__imported__module__$5b$externals$5d2f$path__$5b$external$5d$__$28$path$2c$__cjs$29$__["default"].join(DATA_DIR, filename);
         const data = await __TURBOPACK__imported__module__$5b$externals$5d2f$fs__$5b$external$5d$__$28$fs$2c$__cjs$29$__["promises"].readFile(filePath, "utf-8");
+        console.log(`[v0] Successfully read ${filename}`);
         return JSON.parse(data);
     } catch (error) {
+        console.log(`[v0] File not found: ${filename}, returning empty array`);
         return [];
     }
 }
@@ -135,8 +137,11 @@ async function writeJSON(filename, data) {
             recursive: true
         });
         await __TURBOPACK__imported__module__$5b$externals$5d2f$fs__$5b$external$5d$__$28$fs$2c$__cjs$29$__["promises"].writeFile(filePath, JSON.stringify(data, null, 2));
+        console.log(`[v0] Successfully wrote to ${filename}`);
+        return true;
     } catch (error) {
-        console.error(`Error writing to ${filename}:`, error);
+        console.error(`[v0] Error writing to ${filename}:`, error);
+        throw error;
     }
 }
 function generateId() {

@@ -5,7 +5,6 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { CheckCircle2, Circle, Trash2, Edit2, AlertCircle } from "lucide-react"
 import { useToast } from "@/hooks/use-toast"
-import axios from "axios"
 
 interface Task {
   id: string
@@ -29,35 +28,46 @@ export function TaskCard({ task, token, onUpdate, onEdit }: TaskCardProps) {
   const { toast } = useToast()
 
   const toggleComplete = async () => {
-    setLoading(true)
     try {
-      const newCompletedStatus = !task.completed
-      console.log("[v0] Toggling task completion:", { taskId: task.id, newStatus: newCompletedStatus })
+      setLoading(true)
+      console.log("[v0] Starting toggle for task:", task.id)
+      console.log("[v0] Token available:", !!token)
+      console.log("[v0] New completed status:", !task.completed)
 
-      const response = await axios.put(
-        `/api/tasks/${task.id}`,
-        { completed: newCompletedStatus },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
+      const response = await fetch(`/api/tasks/${task.id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
-      )
+        body: JSON.stringify({
+          completed: !task.completed,
+        }),
+      })
 
-      console.log("[v0] Task update response:", response.data)
+      console.log("[v0] Response status:", response.status)
+
+      if (!response.ok) {
+        const errorData = await response.json()
+        console.error("[v0] API error:", errorData)
+        throw new Error(errorData.error || "Failed to update task")
+      }
+
+      const updatedTask = await response.json()
+      console.log("[v0] Task updated successfully:", updatedTask)
 
       toast({
         title: "Success",
-        description: newCompletedStatus ? "Task marked as complete! 🎉" : "Task marked as incomplete",
+        description: !task.completed ? "Task marked as complete! 🎉" : "Task marked as incomplete",
       })
+
       onUpdate()
     } catch (error: any) {
-      console.error("[v0] Toggle complete error:", error.response?.data || error.message)
+      console.error("[v0] Toggle complete error:", error)
       toast({
         variant: "destructive",
         title: "Error",
-        description: error.response?.data?.error || "Failed to update task. Please try again.",
+        description: error.message || "Failed to update task",
       })
     } finally {
       setLoading(false)
@@ -65,24 +75,36 @@ export function TaskCard({ task, token, onUpdate, onEdit }: TaskCardProps) {
   }
 
   const deleteTask = async () => {
-    if (!confirm("Are you sure you want to delete this task? This action cannot be undone.")) return
-    setLoading(true)
+    if (!confirm("Are you sure you want to delete this task?")) return
+
     try {
+      setLoading(true)
       console.log("[v0] Deleting task:", task.id)
-      await axios.delete(`/api/tasks/${task.id}`, {
-        headers: { Authorization: `Bearer ${token}` },
+
+      const response = await fetch(`/api/tasks/${task.id}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       })
+
+      if (!response.ok) {
+        const errorData = await response.json()
+        throw new Error(errorData.error || "Failed to delete task")
+      }
+
       toast({
         title: "Deleted",
         description: "Task has been removed",
       })
+
       onUpdate()
     } catch (error: any) {
-      console.error("[v0] Delete error:", error.response?.data || error.message)
+      console.error("[v0] Delete error:", error)
       toast({
         variant: "destructive",
         title: "Error",
-        description: error.response?.data?.error || "Failed to delete task",
+        description: error.message || "Failed to delete task",
       })
     } finally {
       setLoading(false)
@@ -101,7 +123,7 @@ export function TaskCard({ task, token, onUpdate, onEdit }: TaskCardProps) {
             <button
               onClick={toggleComplete}
               disabled={loading}
-              className="mt-1 flex-shrink-0 transition-all transform hover:scale-110 active:scale-95 disabled:opacity-50 p-1"
+              className="mt-1 flex-shrink-0 transition-all transform hover:scale-110 active:scale-95 disabled:opacity-50 p-1 cursor-pointer"
               aria-label={task.completed ? "Mark as incomplete" : "Mark as complete"}
               title={task.completed ? "Click to mark as incomplete" : "Click to mark as complete"}
             >
@@ -148,7 +170,11 @@ export function TaskCard({ task, token, onUpdate, onEdit }: TaskCardProps) {
         {task.dueDate && (
           <p className={`text-xs ${isOverdue ? "text-red-600 font-semibold" : "text-gray-500"}`}>
             Due:{" "}
-            {new Date(task.dueDate).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}
+            {new Date(task.dueDate).toLocaleDateString("en-US", {
+              month: "short",
+              day: "numeric",
+              year: "numeric",
+            })}
           </p>
         )}
       </CardContent>
