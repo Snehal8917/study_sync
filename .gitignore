@@ -1,5 +1,6 @@
 # Dependencies
 node_modules/
+mongodb-compass-*.dmg
 
 # Next.js build output
 .next/
