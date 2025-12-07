@@ -1,239 +1,100 @@
-[00:00:00.634] Server  LOG      ✓ Ready in 456ms
-[00:00:08.662] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:00:08.796] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
-[00:00:08.796] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/","route":"/"}
-[00:00:08.796] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3000/","r":"","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1765082164028}
-[00:00:08.796] Server  LOG     [v0] Successfully read users.json
-[00:00:08.800] Server  LOG     [v0] Successfully read users.json
-[00:00:08.808] Server  LOG     [v0] Successfully read users.json
-[00:00:09.565] Server  LOG     [v0] GET /api/tasks - token exists: true
-[00:00:09.565] Server  LOG     [v0] Token verified, userId: "1764808006969_3xgtw37dp"
-[00:00:09.575] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard","o":"http://localhost:3000/dashboard","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1765082164784}
-[00:00:09.576] Server  LOG     [v0] Successfully read sessions.json
-[00:00:09.579] Server  LOG     [v0] Successfully read tasks.json
-[00:00:09.579] Server  LOG     [v0] All tasks read: 2
-[00:00:09.579] Server  LOG     [v0] User tasks filtered: 1
-[00:00:09.580] Server  LOG     [v0] Returning filtered tasks: 1
-[00:00:09.593] Server  LOG     [v0] GET /api/tasks - token exists: true
-[00:00:09.593] Server  LOG     [v0] Token verified, userId: "1764808006969_3xgtw37dp"
-[00:00:09.602] Server  LOG     [v0] Successfully read sessions.json
-[00:00:09.605] Server  LOG     [v0] Successfully read tasks.json
-[00:00:09.605] Server  LOG     [v0] All tasks read: 2
-[00:00:09.605] Server  LOG     [v0] User tasks filtered: 1
-[00:00:09.605] Server  LOG     [v0] Returning filtered tasks: 1
-[00:00:10.809] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/auth/login color: rgb(120, 120, 120) color: inherit {"dp":"/auth/login","o":"http://localhost:3000/auth/login","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1765082166045}
-[00:00:15.410] Server  LOG     [v0] Successfully read users.json
-[00:00:15.445] Server  LOG     [v0] GET /api/tasks - token exists: true
-[00:00:15.445] Server  LOG     [v0] Token verified, userId: "1764446123470_yn7grsu7m"
-[00:00:15.448] Server  LOG     [v0] Successfully read tasks.json
-[00:00:15.448] Server  LOG     [v0] All tasks read: 2
-[00:00:15.448] Server  LOG     [v0] User tasks filtered: 1
-[00:00:15.448] Server  LOG     [v0] Returning filtered tasks: 1
-[00:00:15.449] Server  LOG     [v0] Successfully read sessions.json
-[00:00:15.456] Server  LOG     [v0] GET /api/tasks - token exists: true
-[00:00:15.456] Server  LOG     [v0] Token verified, userId: "1764446123470_yn7grsu7m"
-[00:00:15.460] Server  LOG     [v0] Successfully read tasks.json
-[00:00:15.461] Server  LOG     [v0] All tasks read: 2
-[00:00:15.461] Server  LOG     [v0] User tasks filtered: 1
-[00:00:15.462] Server  LOG     [v0] Returning filtered tasks: 1
-[00:00:15.465] Server  LOG     [v0] Successfully read sessions.json
-[00:00:15.535] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard","o":"http://localhost:3000/dashboard","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1765082170769}
-[00:00:16.822] Server  LOG     [v0] GET /api/tasks - token exists: true
-[00:00:16.822] Server  LOG     [v0] Token verified, userId: "1764446123470_yn7grsu7m"
-[00:00:16.823] Server  LOG     [v0] Successfully read tasks.json
-[00:00:16.824] Server  LOG     [v0] All tasks read: 2
-[00:00:16.824] Server  LOG     [v0] User tasks filtered: 1
-[00:00:16.824] Server  LOG     [v0] Returning filtered tasks: 1
-[00:00:16.830] Server  LOG     [v0] GET /api/tasks - token exists: true
-[00:00:16.830] Server  LOG     [v0] Token verified, userId: "1764446123470_yn7grsu7m"
-[00:00:16.831] Server  LOG     [v0] Successfully read tasks.json
-[00:00:16.831] Server  LOG     [v0] All tasks read: 2
-[00:00:16.831] Server  LOG     [v0] User tasks filtered: 1
-[00:00:16.831] Server  LOG     [v0] Returning filtered tasks: 1
-[00:00:16.970] Browser LOG     [v0] Initializing data...
-[00:00:16.970] Browser LOG     [v0] Fetching tasks with token: true
-[00:00:16.970] Browser LOG     [v0] Initializing data...
-[00:00:16.970] Browser LOG     [v0] Fetching tasks with token: true
-[00:00:16.970] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/tasks color: rgb(120, 120, 120) color: inherit {"dp":"/tasks","o":"http://localhost:3000/tasks","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1765082172148}
-[00:00:16.970] Browser LOG     [v0] Fetch response status: 200
-[00:00:16.970] Browser LOG     [v0] Tasks fetched: {"tasks":[{"completed":true,"createdAt":"2025-12-04T00:19:42.450Z","description":"1212","dueDate":"2026-01-09T00:00:00.000Z","id":"1764807582450_clrfx7qdv","subject":"12","title":"12","userId":"1764446123470_yn7grsu7m"}]}
-[00:00:16.970] Browser LOG     [v0] Fetch response status: 200
-[00:00:16.970] Browser LOG     [v0] Tasks fetched: {"tasks":[{"completed":true,"createdAt":"2025-12-04T00:19:42.450Z","description":"1212","dueDate":"2026-01-09T00:00:00.000Z","id":"1764807582450_clrfx7qdv","subject":"12","title":"12","userId":"1764446123470_yn7grsu7m"}]}
-[00:00:16.970] Browser LOG     [v0] Data initialized successfully
-[00:00:16.970] Browser LOG     [v0] Data initialized successfully
-[00:00:20.479] Browser LOG     [v0] Deleting task: 1764807582450_clrfx7qdv
-[00:00:20.887] Server  LOG     [v0] DELETE /api/tasks/[id] - id: "1764807582450_clrfx7qdv" "token exists:" true
-[00:00:20.889] Server  LOG     [v0] Successfully read tasks.json
-[00:00:20.889] Server  LOG     [v0] Total tasks before delete: 2
-[00:00:20.889] Server  LOG     [v0] Successfully wrote to tasks.json
-[00:00:20.889] Server  LOG     [v0] Task deleted, remaining tasks: 1
-[00:00:20.895] Server  LOG     [v0] GET /api/tasks - token exists: true
-[00:00:20.896] Server  LOG     [v0] Token verified, userId: "1764446123470_yn7grsu7m"
-[00:00:20.896] Server  LOG     [v0] Successfully read tasks.json
-[00:00:20.897] Server  LOG     [v0] All tasks read: 1
-[00:00:20.897] Server  LOG     [v0] User tasks filtered: 0
-[00:00:20.897] Server  LOG     [v0] Returning filtered tasks: 0
-[00:00:21.001] Browser LOG     [v0] Fetching tasks with token: true
-[00:00:21.001] Browser LOG     [v0] Fetch response status: 200
-[00:00:21.001] Browser LOG     [v0] Tasks fetched: {"tasks":[]}
-[00:00:23.129] Server  LOG     [v0] GET /api/tasks - token exists: true
-[00:00:23.129] Server  LOG     [v0] Token verified, userId: "1764446123470_yn7grsu7m"
-[00:00:23.130] Server  LOG     [v0] Successfully read sessions.json
-[00:00:23.132] Server  LOG     [v0] Successfully read tasks.json
-[00:00:23.133] Server  LOG     [v0] All tasks read: 1
-[00:00:23.133] Server  LOG     [v0] User tasks filtered: 0
-[00:00:23.133] Server  LOG     [v0] Returning filtered tasks: 0
-[00:00:23.144] Server  LOG     [v0] GET /api/tasks - token exists: true
-[00:00:23.144] Server  LOG     [v0] Token verified, userId: "1764446123470_yn7grsu7m"
-[00:00:23.145] Server  LOG     [v0] Successfully read sessions.json
-[00:00:23.147] Server  LOG     [v0] Successfully read tasks.json
-[00:00:23.147] Server  LOG     [v0] All tasks read: 1
-[00:00:23.147] Server  LOG     [v0] User tasks filtered: 0
-[00:00:23.147] Server  LOG     [v0] Returning filtered tasks: 0
-[00:00:23.220] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/sessions color: rgb(120, 120, 120) color: inherit {"dp":"/sessions","o":"http://localhost:3000/sessions","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1765082178454}
-[00:00:24.821] Server  LOG     [v0] GET /api/tasks - token exists: true
-[00:00:24.821] Server  LOG     [v0] Token verified, userId: "1764446123470_yn7grsu7m"
-[00:00:24.822] Server  LOG     [v0] Successfully read tasks.json
-[00:00:24.822] Server  LOG     [v0] All tasks read: 1
-[00:00:24.822] Server  LOG     [v0] User tasks filtered: 0
-[00:00:24.822] Server  LOG     [v0] Returning filtered tasks: 0
-[00:00:24.830] Server  LOG     [v0] GET /api/tasks - token exists: true
-[00:00:24.830] Server  LOG     [v0] Token verified, userId: "1764446123470_yn7grsu7m"
-[00:00:24.833] Server  LOG     [v0] Successfully read tasks.json
-[00:00:24.834] Server  LOG     [v0] All tasks read: 1
-[00:00:24.834] Server  LOG     [v0] User tasks filtered: 0
-[00:00:24.834] Server  LOG     [v0] Returning filtered tasks: 0
-[00:00:24.940] Browser LOG     [v0] Initializing data...
-[00:00:24.940] Browser LOG     [v0] Fetching tasks with token: true
-[00:00:24.940] Browser LOG     [v0] Initializing data...
-[00:00:24.940] Browser LOG     [v0] Fetching tasks with token: true
-[00:00:24.940] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/tasks color: rgb(120, 120, 120) color: inherit {"dp":"/tasks","o":"http://localhost:3000/tasks","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1765082180139}
-[00:00:24.940] Browser LOG     [v0] Fetch response status: 200
-[00:00:24.940] Browser LOG     [v0] Tasks fetched: {"tasks":[]}
-[00:00:24.940] Browser LOG     [v0] Data initialized successfully
-[00:00:24.940] Browser LOG     [v0] Fetch response status: 200
-[00:00:24.940] Browser LOG     [v0] Tasks fetched: {"tasks":[]}
-[00:00:24.940] Browser LOG     [v0] Data initialized successfully
-[00:00:26.469] Browser WARN    Warning: Missing `Description` or `aria-describedby={undefined}` for {DialogContent}.
-[00:00:26.469] Browser WARN    Warning: Missing `Description` or `aria-describedby={undefined}` for {DialogContent}.
-[00:00:57.055] Server  LOG     [v0] POST /api/tasks - token exists: true
-[00:00:57.056] Server  LOG     [v0] Token verified for creation, userId: "1764446123470_yn7grsu7m"
-[00:00:57.057] Server  LOG     [v0] Request body: {}
-[00:00:57.059] Server  LOG     [v0] Successfully read tasks.json
-[00:00:57.059] Server  LOG     [v0] Read existing tasks: 1
-[00:00:57.061] Server  LOG     [v0] Successfully wrote to tasks.json
-[00:00:57.061] Server  LOG     [v0] Task created and saved: "1765082212396_gp0wr3xto"
-[00:00:57.069] Server  LOG     [v0] GET /api/tasks - token exists: true
-[00:00:57.070] Server  LOG     [v0] Token verified, userId: "1764446123470_yn7grsu7m"
-[00:00:57.072] Server  LOG     [v0] Successfully read tasks.json
-[00:00:57.072] Server  LOG     [v0] All tasks read: 2
-[00:00:57.072] Server  LOG     [v0] User tasks filtered: 1
-[00:00:57.072] Server  LOG     [v0] Returning filtered tasks: 1
-[00:00:57.176] Browser LOG     [v0] Fetching tasks with token: true
-[00:00:57.176] Browser LOG     [v0] Fetch response status: 200
-[00:00:57.176] Browser LOG     [v0] Tasks fetched: {"tasks":[{"completed":false,"createdAt":"2025-12-07T04:36:52.396Z","description":"Need to complete 15 pages","dueDate":"2025-12-12T00:00:00.000Z","id":"1765082212396_gp0wr3xto","subject":"AGILE","title":"Study Chapter 5","userId":"1764446123470_yn7grsu7m"}]}
-[00:00:59.685] Server  LOG     [v0] GET /api/tasks - token exists: true
-[00:00:59.685] Server  LOG     [v0] Token verified, userId: "1764446123470_yn7grsu7m"
-[00:00:59.687] Server  LOG     [v0] Successfully read sessions.json
-[00:00:59.689] Server  LOG     [v0] Successfully read tasks.json
-[00:00:59.690] Server  LOG     [v0] All tasks read: 2
-[00:00:59.690] Server  LOG     [v0] User tasks filtered: 1
-[00:00:59.690] Server  LOG     [v0] Returning filtered tasks: 1
-[00:00:59.697] Server  LOG     [v0] GET /api/tasks - token exists: true
-[00:00:59.697] Server  LOG     [v0] Token verified, userId: "1764446123470_yn7grsu7m"
-[00:00:59.701] Server  LOG     [v0] Successfully read tasks.json
-[00:00:59.702] Server  LOG     [v0] All tasks read: 2
-[00:00:59.702] Server  LOG     [v0] User tasks filtered: 1
-[00:00:59.702] Server  LOG     [v0] Returning filtered tasks: 1
-[00:00:59.705] Server  LOG     [v0] Successfully read sessions.json
-[00:00:59.773] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/sessions color: rgb(120, 120, 120) color: inherit {"dp":"/sessions","o":"http://localhost:3000/sessions","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1765082215006}
-[00:01:01.413] Browser WARN    Warning: Missing `Description` or `aria-describedby={undefined}` for {DialogContent}.
-[00:01:01.413] Browser WARN    Warning: Missing `Description` or `aria-describedby={undefined}` for {DialogContent}.
-[00:01:17.655] Server  LOG     [v0] Successfully read tasks.json
-[00:01:17.656] Server  LOG     [v0] Successfully read sessions.json
-[00:01:17.659] Server  LOG     [v0] Successfully wrote to sessions.json
-[00:01:17.675] Server  LOG     [v0] GET /api/tasks - token exists: true
-[00:01:17.675] Server  LOG     [v0] Token verified, userId: "1764446123470_yn7grsu7m"
-[00:01:17.676] Server  LOG     [v0] Successfully read sessions.json
-[00:01:17.678] Server  LOG     [v0] Successfully read tasks.json
-[00:01:17.678] Server  LOG     [v0] All tasks read: 2
-[00:01:17.678] Server  LOG     [v0] User tasks filtered: 1
-[00:01:17.679] Server  LOG     [v0] Returning filtered tasks: 1
-[00:01:21.667] Server  LOG     [v0] GET /api/tasks - token exists: true
-[00:01:21.667] Server  LOG     [v0] Token verified, userId: "1764446123470_yn7grsu7m"
-[00:01:21.669] Server  LOG     [v0] Successfully read tasks.json
-[00:01:21.669] Server  LOG     [v0] All tasks read: 2
-[00:01:21.669] Server  LOG     [v0] User tasks filtered: 1
-[00:01:21.669] Server  LOG     [v0] Returning filtered tasks: 1
-[00:01:21.677] Server  LOG     [v0] GET /api/tasks - token exists: true
-[00:01:21.677] Server  LOG     [v0] Token verified, userId: "1764446123470_yn7grsu7m"
-[00:01:21.678] Server  LOG     [v0] Successfully read tasks.json
-[00:01:21.678] Server  LOG     [v0] All tasks read: 2
-[00:01:21.678] Server  LOG     [v0] User tasks filtered: 1
-[00:01:21.678] Server  LOG     [v0] Returning filtered tasks: 1
-[00:01:21.783] Browser LOG     [v0] Initializing data...
-[00:01:21.783] Browser LOG     [v0] Fetching tasks with token: true
-[00:01:21.783] Browser LOG     [v0] Initializing data...
-[00:01:21.783] Browser LOG     [v0] Fetching tasks with token: true
-[00:01:21.783] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/tasks color: rgb(120, 120, 120) color: inherit {"dp":"/tasks","o":"http://localhost:3000/tasks","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1765082236989}
-[00:01:21.783] Browser LOG     [v0] Fetch response status: 200
-[00:01:21.783] Browser LOG     [v0] Tasks fetched: {"tasks":[{"completed":false,"createdAt":"2025-12-07T04:36:52.396Z","description":"Need to complete 15 pages","dueDate":"2025-12-12T00:00:00.000Z","id":"1765082212396_gp0wr3xto","subject":"AGILE","title":"Study Chapter 5","userId":"1764446123470_yn7grsu7m"}]}
-[00:01:21.783] Browser LOG     [v0] Data initialized successfully
-[00:01:21.783] Browser LOG     [v0] Fetch response status: 200
-[00:01:21.783] Browser LOG     [v0] Tasks fetched: {"tasks":[{"completed":false,"createdAt":"2025-12-07T04:36:52.396Z","description":"Need to complete 15 pages","dueDate":"2025-12-12T00:00:00.000Z","id":"1765082212396_gp0wr3xto","subject":"AGILE","title":"Study Chapter 5","userId":"1764446123470_yn7grsu7m"}]}
-[00:01:21.783] Browser LOG     [v0] Data initialized successfully
-[00:01:26.527] Server  LOG     [v0] GET /api/tasks - token exists: true
-[00:01:26.527] Server  LOG     [v0] Token verified, userId: "1764446123470_yn7grsu7m"
-[00:01:26.528] Server  LOG     [v0] Successfully read sessions.json
-[00:01:26.530] Server  LOG     [v0] Successfully read tasks.json
-[00:01:26.531] Server  LOG     [v0] All tasks read: 2
-[00:01:26.531] Server  LOG     [v0] User tasks filtered: 1
-[00:01:26.531] Server  LOG     [v0] Returning filtered tasks: 1
-[00:01:26.542] Server  LOG     [v0] GET /api/tasks - token exists: true
-[00:01:26.542] Server  LOG     [v0] Token verified, userId: "1764446123470_yn7grsu7m"
-[00:01:26.543] Server  LOG     [v0] Successfully read sessions.json
-[00:01:26.545] Server  LOG     [v0] Successfully read tasks.json
-[00:01:26.545] Server  LOG     [v0] All tasks read: 2
-[00:01:26.545] Server  LOG     [v0] User tasks filtered: 1
-[00:01:26.545] Server  LOG     [v0] Returning filtered tasks: 1
-[00:01:26.611] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/sessions color: rgb(120, 120, 120) color: inherit {"dp":"/sessions","o":"http://localhost:3000/sessions","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1765082241844}
-[00:01:37.226] Server  LOG     [v0] Successfully read streak.json
-[00:01:37.230] Server  LOG     [v0] Successfully read streak.json
-[00:01:37.285] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/streak color: rgb(120, 120, 120) color: inherit {"dp":"/streak","o":"http://localhost:3000/streak","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1765082252520}
-[00:01:38.138] Server  LOG     [v0] Successfully read streak.json
-[00:01:38.139] Server  LOG     [v0] Successfully wrote to streak.json
-[00:02:46.204] Server  LOG      ✓ Compiled in 51ms
-[00:02:54.505] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:02:54.517] Server  LOG     [v0] Successfully read users.json
-[00:02:54.526] Server  LOG     [v0] Successfully read users.json
-[00:02:54.528] Server  LOG     [v0] Successfully read streak.json
-[00:02:54.533] Server  LOG     [v0] Successfully read users.json
-[00:02:54.624] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
-[00:02:54.624] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/streak","route":"/streak"}
-[00:02:54.624] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/streak color: rgb(120, 120, 120) color: inherit {"dp":"/streak","o":"http://localhost:3000/streak","r":"","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1765082329857}
-[00:02:59.522] Server  LOG      ✓ Compiled in 23ms
-[00:03:08.371] Server  LOG      ✓ Compiled in 21ms
-[00:03:17.203] Server  LOG      ✓ Compiled in 20ms
-[00:03:39.594] Server  LOG     [v0] GET /api/tasks - token exists: true
-[00:03:39.594] Server  LOG     [v0] Token verified, userId: "1764446123470_yn7grsu7m"
-[00:03:39.598] Server  LOG     [v0] Successfully read tasks.json
-[00:03:39.598] Server  LOG     [v0] All tasks read: 2
-[00:03:39.598] Server  LOG     [v0] User tasks filtered: 1
-[00:03:39.599] Server  LOG     [v0] Returning filtered tasks: 1
-[00:03:39.607] Server  LOG     [v0] GET /api/tasks - token exists: true
-[00:03:39.608] Server  LOG     [v0] Token verified, userId: "1764446123470_yn7grsu7m"
-[00:03:39.609] Server  LOG     [v0] Successfully read tasks.json
-[00:03:39.609] Server  LOG     [v0] All tasks read: 2
-[00:03:39.609] Server  LOG     [v0] User tasks filtered: 1
-[00:03:39.609] Server  LOG     [v0] Returning filtered tasks: 1
-[00:03:39.714] Browser LOG     [v0] Initializing data...
-[00:03:39.714] Browser LOG     [v0] Fetching tasks with token: true
-[00:03:39.714] Browser LOG     [v0] Initializing data...
-[00:03:39.714] Browser LOG     [v0] Fetching tasks with token: true
-[00:03:39.714] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/tasks color: rgb(120, 120, 120) color: inherit {"dp":"/tasks","o":"http://localhost:3000/tasks","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1765082374915}
-[00:03:39.714] Browser LOG     [v0] Data initialized successfully
-[00:03:39.714] Browser LOG     [v0] Fetch response status: 200
-[00:03:39.714] Browser LOG     [v0] Tasks fetched: {"tasks":[{"completed":false,"createdAt":"2025-12-07T04:36:52.396Z","description":"Need to complete 15 pages","dueDate":"2025-12-12T00:00:00.000Z","id":"1765082212396_gp0wr3xto","subject":"AGILE","title":"Study Chapter 5","userId":"1764446123470_yn7grsu7m"}]}
-[00:03:39.714] Browser LOG     [v0] Fetch response status: 200
-[00:03:39.714] Browser LOG     [v0] Tasks fetched: {"tasks":[{"completed":false,"createdAt":"2025-12-07T04:36:52.396Z","description":"Need to complete 15 pages","dueDate":"2025-12-12T00:00:00.000Z","id":"1765082212396_gp0wr3xto","subject":"AGILE","title":"Study Chapter 5","userId":"1764446123470_yn7grsu7m"}]}
-[00:03:39.714] Browser LOG     [v0] Data initialized successfully
+[00:00:00.450] Server  LOG      ✓ Ready in 282ms
+[00:00:02.911] Server  LOG     MONGODB_URI: "mongodb+srv://Study_sync:8917@cluster0.0wvluhc.mongodb.net/"
+[00:00:03.529] Server  ERROR   [v0] MongoDB connection error: MongoServerError: bad auth : authentication failed
+[00:00:03.532] Server  ERROR   [v0] Registration error: MongoServerError: bad auth : authentication failed
+[00:00:04.539] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:00:04.668] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[00:00:04.668] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/auth/register","route":"/auth/register"}
+[00:00:04.668] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/auth/register color: rgb(120, 120, 120) color: inherit {"dp":"/auth/register","o":"http://localhost:3000/auth/register","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1765135759034}
+[00:21:51.920] Server  LOG        Reload env: .env.local
+[00:22:14.753] Server  LOG     MONGODB_URI: "mongodb+srv://snehalprajapatiit19_db_user:LPn1yAmq8IIWrtPO@studysync.8vvdxdo.mongodb.net/"
+[00:22:15.991] Server  LOG     [v0] Connected to MongoDB Atlas
+[00:22:16.056] Server  LOG     [v0] User registered successfully: "hello@gmail.com"
+[00:22:17.037] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard","o":"http://localhost:3000/dashboard","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1765137091494}
+[00:22:17.080] Server  LOG     [v0] GET /api/tasks - token exists: true
+[00:22:17.080] Server  LOG     [v0] Token verified, userId: "6935dac236b4defacbd606b5"
+[00:22:17.115] Server  LOG     [v0] User tasks fetched: 0
+[00:22:17.115] Server  LOG     [v0] Returning filtered tasks: 0
+[00:22:17.120] Server  LOG     [v0] GET /api/tasks - token exists: true
+[00:22:17.120] Server  LOG     [v0] Token verified, userId: "6935dac236b4defacbd606b5"
+[00:22:17.148] Server  LOG     [v0] User tasks fetched: 0
+[00:22:17.149] Server  LOG     [v0] Returning filtered tasks: 0
+[00:23:12.472] Server  LOG     [v0] GET /api/tasks - token exists: true
+[00:23:12.475] Server  LOG     [v0] Token verified, userId: "6935dac236b4defacbd606b5"
+[00:23:12.505] Server  LOG     [v0] User tasks fetched: 0
+[00:23:12.505] Server  LOG     [v0] Returning filtered tasks: 0
+[00:23:12.511] Server  LOG     [v0] GET /api/tasks - token exists: true
+[00:23:12.512] Server  LOG     [v0] Token verified, userId: "6935dac236b4defacbd606b5"
+[00:23:12.545] Server  LOG     [v0] User tasks fetched: 0
+[00:23:12.546] Server  LOG     [v0] Returning filtered tasks: 0
+[00:23:12.655] Browser LOG     [v0] Initializing data...
+[00:23:12.655] Browser LOG     [v0] Fetching tasks with token: true
+[00:23:12.655] Browser LOG     [v0] Initializing data...
+[00:23:12.655] Browser LOG     [v0] Fetching tasks with token: true
+[00:23:12.655] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/tasks color: rgb(120, 120, 120) color: inherit {"dp":"/tasks","o":"http://localhost:3000/tasks","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1765137147014}
+[00:23:12.655] Browser LOG     [v0] Fetch response status: 200
+[00:23:12.655] Browser LOG     [v0] Tasks fetched: {"tasks":[]}
+[00:23:12.655] Browser LOG     [v0] Fetch response status: 200
+[00:23:12.655] Browser LOG     [v0] Tasks fetched: {"tasks":[]}
+[00:23:12.655] Browser LOG     [v0] Data initialized successfully
+[00:23:12.655] Browser LOG     [v0] Data initialized successfully
+[00:23:13.920] Browser WARN    Warning: Missing `Description` or `aria-describedby={undefined}` for {DialogContent}.
+[00:23:13.920] Browser WARN    Warning: Missing `Description` or `aria-describedby={undefined}` for {DialogContent}.
+[00:23:29.580] Server  LOG     [v0] POST /api/tasks - token exists: true
+[00:23:29.580] Server  LOG     [v0] Token verified for creation, userId: "6935dac236b4defacbd606b5"
+[00:23:29.584] Server  LOG     [v0] Request body: {}
+[00:23:29.622] Server  LOG     [v0] Task created with ID: {}
+[00:23:29.636] Server  LOG     [v0] GET /api/tasks - token exists: true
+[00:23:29.637] Server  LOG     [v0] Token verified, userId: "6935dac236b4defacbd606b5"
+[00:23:29.667] Server  LOG     [v0] User tasks fetched: 1
+[00:23:29.667] Server  LOG     [v0] Returning filtered tasks: 1
+[00:23:29.771] Browser LOG     [v0] Fetching tasks with token: true
+[00:23:29.771] Browser LOG     [v0] Fetch response status: 200
+[00:23:29.771] Browser LOG     [v0] Tasks fetched: {"tasks":[{"_id":"6935db0c36b4defacbd606b6","completed":false,"createdAt":"2025-12-07T19:52:44.146Z","description":"nothing to say","dueDate":"2025-12-24T00:00:00.000Z","id":"6935db0c36b4defacbd606b6","subject":"Demo subject","title":"Demo","userId":"6935dac236b4defacbd606b5"}]}
+[00:23:33.214] Server  LOG     [v0] GET /api/tasks - token exists: true
+[00:23:33.214] Server  LOG     [v0] Token verified, userId: "6935dac236b4defacbd606b5"
+[00:23:33.240] Server  LOG     [v0] User tasks fetched: 1
+[00:23:33.240] Server  LOG     [v0] Returning filtered tasks: 1
+[00:23:33.243] Server  LOG     [v0] GET /api/tasks - token exists: true
+[00:23:33.243] Server  LOG     [v0] Token verified, userId: "6935dac236b4defacbd606b5"
+[00:23:33.267] Server  LOG     [v0] User tasks fetched: 1
+[00:23:33.267] Server  LOG     [v0] Returning filtered tasks: 1
+[00:23:33.302] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/sessions color: rgb(120, 120, 120) color: inherit {"dp":"/sessions","o":"http://localhost:3000/sessions","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1765137167761}
+[00:23:34.361] Browser WARN    Warning: Missing `Description` or `aria-describedby={undefined}` for {DialogContent}.
+[00:23:34.361] Browser WARN    Warning: Missing `Description` or `aria-describedby={undefined}` for {DialogContent}.
+[00:23:38.521] Server  LOG     [v0] Session created with ID: {}
+[00:23:38.548] Server  LOG     [v0] GET /api/tasks - token exists: true
+[00:23:38.549] Server  LOG     [v0] Token verified, userId: "6935dac236b4defacbd606b5"
+[00:23:38.579] Server  LOG     [v0] User tasks fetched: 1
+[00:23:38.579] Server  LOG     [v0] Returning filtered tasks: 1
+[00:23:40.065] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/streak color: rgb(120, 120, 120) color: inherit {"dp":"/streak","o":"http://localhost:3000/streak","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1765137174524}
+[00:23:57.527] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/auth/login color: rgb(120, 120, 120) color: inherit {"dp":"/auth/login","o":"http://localhost:3000/auth/login","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1765137191987}
+[00:24:10.029] Server  LOG     [v0] User logged in: "hello@gmail.com"
+[00:24:10.076] Server  LOG     [v0] GET /api/tasks - token exists: true
+[00:24:10.076] Server  LOG     [v0] Token verified, userId: "6935dac236b4defacbd606b5"
+[00:24:10.115] Server  LOG     [v0] User tasks fetched: 1
+[00:24:10.115] Server  LOG     [v0] Returning filtered tasks: 1
+[00:24:10.120] Server  LOG     [v0] GET /api/tasks - token exists: true
+[00:24:10.120] Server  LOG     [v0] Token verified, userId: "6935dac236b4defacbd606b5"
+[00:24:10.150] Server  LOG     [v0] User tasks fetched: 1
+[00:24:10.151] Server  LOG     [v0] Returning filtered tasks: 1
+[00:24:10.157] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard","o":"http://localhost:3000/dashboard","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1765137204618}
+[00:24:13.410] Server  LOG     [v0] GET /api/tasks - token exists: true
+[00:24:13.410] Server  LOG     [v0] Token verified, userId: "6935dac236b4defacbd606b5"
+[00:24:13.446] Server  LOG     [v0] User tasks fetched: 1
+[00:24:13.447] Server  LOG     [v0] Returning filtered tasks: 1
+[00:24:13.450] Server  LOG     [v0] GET /api/tasks - token exists: true
+[00:24:13.450] Server  LOG     [v0] Token verified, userId: "6935dac236b4defacbd606b5"
+[00:24:13.477] Server  LOG     [v0] User tasks fetched: 1
+[00:24:13.478] Server  LOG     [v0] Returning filtered tasks: 1
+[00:24:13.581] Browser LOG     [v0] Initializing data...
+[00:24:13.581] Browser LOG     [v0] Fetching tasks with token: true
+[00:24:13.581] Browser LOG     [v0] Initializing data...
+[00:24:13.581] Browser LOG     [v0] Fetching tasks with token: true
+[00:24:13.581] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/tasks color: rgb(120, 120, 120) color: inherit {"dp":"/tasks","o":"http://localhost:3000/tasks","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1765137207962}
+[00:24:13.581] Browser LOG     [v0] Data initialized successfully
+[00:24:13.581] Browser LOG     [v0] Data initialized successfully
+[00:24:13.581] Browser LOG     [v0] Fetch response status: 200
+[00:24:13.581] Browser LOG     [v0] Tasks fetched: {"tasks":[{"_id":"6935db0c36b4defacbd606b6","completed":false,"createdAt":"2025-12-07T19:52:44.146Z","description":"nothing to say","dueDate":"2025-12-24T00:00:00.000Z","id":"6935db0c36b4defacbd606b6","subject":"Demo subject","title":"Demo","userId":"6935dac236b4defacbd606b5"}]}
+[00:24:13.581] Browser LOG     [v0] Fetch response status: 200
+[00:24:13.581] Browser LOG     [v0] Tasks fetched: {"tasks":[{"_id":"6935db0c36b4defacbd606b6","completed":false,"createdAt":"2025-12-07T19:52:44.146Z","description":"nothing to say","dueDate":"2025-12-24T00:00:00.000Z","id":"6935db0c36b4defacbd606b6","subject":"Demo subject","title":"Demo","userId":"6935dac236b4defacbd606b5"}]}

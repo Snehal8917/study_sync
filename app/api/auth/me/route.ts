@@ -1,6 +1,7 @@
 import { type NextRequest, NextResponse } from "next/server"
 import { verifyToken } from "@/lib/jwt"
-import { readJSON } from "@/lib/fs"
+import { getDatabase } from "@/lib/mongodb"
+import { ObjectId } from "mongodb"
 
 export async function GET(request: NextRequest) {
   try {
@@ -16,17 +17,20 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: "Invalid token" }, { status: 401 })
     }
 
-    const users = await readJSON("users.json")
-    const user = users.find((u: any) => u.id === payload.id)
+    const db = await getDatabase()
+    const usersCollection = db.collection("users")
+
+    const user = await usersCollection.findOne({ _id: new ObjectId(payload.id) })
 
     if (!user) {
       return NextResponse.json({ error: "User not found" }, { status: 404 })
     }
 
     return NextResponse.json({
-      user: { id: user.id, name: user.name, email: user.email, theme: user.theme },
+      user: { id: user._id.toString(), name: user.name, email: user.email, theme: user.theme },
     })
   } catch (error: any) {
+    console.error("[v0] Auth check error:", error)
     return NextResponse.json({ error: error.message }, { status: 400 })
   }
 }

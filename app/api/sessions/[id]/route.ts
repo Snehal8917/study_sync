@@ -1,8 +1,9 @@
 import { type NextRequest, NextResponse } from "next/server"
 import { verifyToken } from "@/lib/jwt"
-import { readJSON, writeJSON } from "@/lib/fs"
+import { getDatabase } from "@/lib/mongodb"
+import { ObjectId } from "mongodb"
 
-export async function DELETE(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+export async function DELETE(request: NextRequest, { params }: { params: { id: string } }) {
   try {
     const { id } = await params
     const token = request.headers.get("authorization")?.replace("Bearer ", "")
@@ -16,16 +17,19 @@ export async function DELETE(request: NextRequest, { params }: { params: Promise
       return NextResponse.json({ error: "Invalid token" }, { status: 401 })
     }
 
-    let sessions = await readJSON("sessions.json")
-    const sessionIndex = sessions.findIndex((s: any) => s.id === id && s.userId === payload.id)
+    const db = await getDatabase()
+    const sessionsCollection = db.collection("sessions")
 
-    if (sessionIndex === -1) {
+    const result = await sessionsCollection.deleteOne({
+      _id: new ObjectId(id),
+      userId: new ObjectId(payload.id),
+    })
+
+    if (result.deletedCount === 0) {
       return NextResponse.json({ error: "Session not found" }, { status: 404 })
     }
 
-    sessions = sessions.filter((s: any) => s.id !== id)
-    await writeJSON("sessions.json", sessions)
-
+    console.log("[v0] Session deleted successfully")
     return NextResponse.json({ message: "Session deleted successfully" })
   } catch (error: any) {
     console.error("[v0] Delete session error:", error)

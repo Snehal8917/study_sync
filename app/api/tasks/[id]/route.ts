@@ -1,9 +1,10 @@
 import { type NextRequest, NextResponse } from "next/server"
 import { verifyToken } from "@/lib/jwt"
-import { readJSON, writeJSON } from "@/lib/fs"
+import { getDatabase } from "@/lib/mongodb"
+import { ObjectId } from "mongodb"
 import { z } from "zod"
 
-export async function GET(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
   try {
     const { id } = await params
     const token = request.headers.get("authorization")?.replace("Bearer ", "")
@@ -14,23 +15,32 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
     const payload = verifyToken(token)
     if (!payload) return NextResponse.json({ error: "Invalid token" }, { status: 401 })
 
-    const tasks = await readJSON("tasks.json")
-    const task = tasks.find((t: any) => t.id === id && t.userId === payload.id)
+    const db = await getDatabase()
+    const tasksCollection = db.collection("tasks")
+
+    const task = await tasksCollection.findOne({
+      _id: new ObjectId(id),
+      userId: new ObjectId(payload.id),
+    })
 
     if (!task) {
       console.log("[v0] Task not found:", id)
       return NextResponse.json({ error: "Task not found" }, { status: 404 })
     }
 
-    console.log("[v0] Task found:", task.id)
-    return NextResponse.json(task)
+    console.log("[v0] Task found:", task._id)
+    return NextResponse.json({
+      ...task,
+      id: task._id.toString(),
+      userId: task.userId.toString(),
+    })
   } catch (error: any) {
     console.error("[v0] GET task error:", error)
     return NextResponse.json({ error: error.message || "Failed to fetch task" }, { status: 400 })
   }
 }
 
-export async function PUT(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+export async function PUT(request: NextRequest, { params }: { params: { id: string } }) {
   try {
     const { id } = await params
     const token = request.headers.get("authorization")?.replace("Bearer ", "")
@@ -64,32 +74,42 @@ export async function PUT(request: NextRequest, { params }: { params: Promise<{ 
     const validated = updateSchema.parse(body)
     console.log("[v0] Validated update data:", validated)
 
-    const tasks = await readJSON("tasks.json")
-    console.log("[v0] Total tasks in file:", tasks.length)
+    const db = await getDatabase()
+    const tasksCollection = db.collection("tasks")
 
-    const taskIndex = tasks.findIndex((t: any) => t.id === id && t.userId === payload.id)
+    const updateData: any = { ...validated }
+    if (validated.dueDate) {
+      updateData.dueDate = new Date(validated.dueDate)
+    }
 
-    if (taskIndex === -1) {
+    const result = await tasksCollection.findOneAndUpdate(
+      {
+        _id: new ObjectId(id),
+        userId: new ObjectId(payload.id),
+      },
+      { $set: updateData },
+      { returnDocument: "after" },
+    )
+
+    if (!result.value) {
       console.error("[v0] Task not found - id:", id, "userId:", payload.id)
       return NextResponse.json({ error: "Task not found" }, { status: 404 })
     }
 
-    console.log("[v0] Task found at index:", taskIndex)
-    const updatedTask = { ...tasks[taskIndex], ...validated }
-    console.log("[v0] Updated task:", updatedTask)
+    console.log("[v0] Task updated successfully")
 
-    tasks[taskIndex] = updatedTask
-    await writeJSON("tasks.json", tasks)
-    console.log("[v0] Task saved successfully")
-
-    return NextResponse.json(updatedTask)
+    return NextResponse.json({
+      ...result.value,
+      id: result.value._id.toString(),
+      userId: result.value.userId.toString(),
+    })
   } catch (error: any) {
     console.error("[v0] PUT task error:", error)
     return NextResponse.json({ error: error.message || "Failed to update task" }, { status: 400 })
   }
 }
 
-export async function DELETE(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+export async function DELETE(request: NextRequest, { params }: { params: { id: string } }) {
   try {
     const { id } = await params
     const token = request.headers.get("authorization")?.replace("Bearer ", "")
@@ -100,19 +120,20 @@ export async function DELETE(request: NextRequest, { params }: { params: Promise
     const payload = verifyToken(token)
     if (!payload) return NextResponse.json({ error: "Invalid token" }, { status: 401 })
 
-    let tasks = await readJSON("tasks.json")
-    console.log("[v0] Total tasks before delete:", tasks.length)
+    const db = await getDatabase()
+    const tasksCollection = db.collection("tasks")
 
-    const taskIndex = tasks.findIndex((t: any) => t.id === id && t.userId === payload.id)
+    const result = await tasksCollection.deleteOne({
+      _id: new ObjectId(id),
+      userId: new ObjectId(payload.id),
+    })
 
-    if (taskIndex === -1) {
+    if (result.deletedCount === 0) {
       console.log("[v0] Task not found for deletion:", id)
       return NextResponse.json({ error: "Task not found" }, { status: 404 })
     }
 
-    tasks = tasks.filter((t: any) => t.id !== id)
-    await writeJSON("tasks.json", tasks)
-    console.log("[v0] Task deleted, remaining tasks:", tasks.length)
+    console.log("[v0] Task deleted successfully")
 
     return NextResponse.json({ message: "Task deleted" })
   } catch (error: any) {

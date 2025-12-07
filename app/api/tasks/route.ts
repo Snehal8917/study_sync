@@ -1,7 +1,8 @@
 import { type NextRequest, NextResponse } from "next/server"
 import { verifyToken } from "@/lib/jwt"
-import { readJSON, writeJSON, generateId } from "@/lib/fs"
 import { taskSchema } from "@/lib/validations"
+import { getDatabase } from "@/lib/mongodb"
+import { ObjectId } from "mongodb"
 
 export async function GET(request: NextRequest) {
   try {
@@ -15,33 +16,40 @@ export async function GET(request: NextRequest) {
 
     if (!payload) return NextResponse.json({ error: "Invalid token" }, { status: 401 })
 
-    const tasks = await readJSON("tasks.json")
-    console.log("[v0] All tasks read:", tasks.length)
-
-    const userTasks = tasks.filter((t: any) => t.userId === payload.id)
-    console.log("[v0] User tasks filtered:", userTasks.length)
+    const db = await getDatabase()
+    const tasksCollection = db.collection("tasks")
 
     const { searchParams } = new URL(request.url)
     const subject = searchParams.get("subject")
     const completed = searchParams.get("completed")
     const sort = searchParams.get("sort")
 
-    let filtered = userTasks
+    const query: any = { userId: new ObjectId(payload.id) }
 
     if (subject) {
-      filtered = filtered.filter((t: any) => t.subject.toLowerCase().includes(subject.toLowerCase()))
+      query.subject = { $regex: subject, $options: "i" }
     }
 
     if (completed !== null) {
-      filtered = filtered.filter((t: any) => t.completed === (completed === "true"))
+      query.completed = completed === "true"
     }
+
+    let tasks = await tasksCollection.find(query).toArray()
+    console.log("[v0] User tasks fetched:", tasks.length)
 
     if (sort === "dueDate") {
-      filtered.sort((a: any, b: any) => new Date(a.dueDate || "").getTime() - new Date(b.dueDate || "").getTime())
+      tasks.sort((a: any, b: any) => new Date(a.dueDate || "").getTime() - new Date(b.dueDate || "").getTime())
     }
 
-    console.log("[v0] Returning filtered tasks:", filtered.length)
-    return NextResponse.json({ tasks: filtered })
+    // Convert ObjectId to string for frontend
+    tasks = tasks.map((t) => ({
+      ...t,
+      id: t._id.toString(),
+      userId: t.userId.toString(),
+    }))
+
+    console.log("[v0] Returning filtered tasks:", tasks.length)
+    return NextResponse.json({ tasks })
   } catch (error: any) {
     console.error("[v0] GET tasks error:", error)
     return NextResponse.json({ error: error.message || "Failed to fetch tasks" }, { status: 400 })
@@ -65,25 +73,30 @@ export async function POST(request: NextRequest) {
 
     const { title, subject, dueDate, description } = taskSchema.parse(body)
 
-    const tasks = await readJSON("tasks.json")
-    console.log("[v0] Read existing tasks:", tasks.length)
+    const db = await getDatabase()
+    const tasksCollection = db.collection("tasks")
 
     const newTask = {
-      id: generateId(),
-      userId: payload.id,
+      userId: new ObjectId(payload.id),
       title,
       subject,
-      dueDate: dueDate || null,
+      dueDate: dueDate ? new Date(dueDate) : null,
       description: description || "",
       completed: false,
-      createdAt: new Date().toISOString(),
+      createdAt: new Date(),
     }
 
-    tasks.push(newTask)
-    await writeJSON("tasks.json", tasks)
-    console.log("[v0] Task created and saved:", newTask.id)
+    const result = await tasksCollection.insertOne(newTask)
+    console.log("[v0] Task created with ID:", result.insertedId)
 
-    return NextResponse.json(newTask, { status: 201 })
+    return NextResponse.json(
+      {
+        ...newTask,
+        id: result.insertedId.toString(),
+        userId: newTask.userId.toString(),
+      },
+      { status: 201 },
+    )
   } catch (error: any) {
     console.error("[v0] POST tasks error:", error)
     return NextResponse.json({ error: error.message || "Failed to create task" }, { status: 400 })

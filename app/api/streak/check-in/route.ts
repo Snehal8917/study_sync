@@ -1,6 +1,7 @@
 import { type NextRequest, NextResponse } from "next/server"
 import { verifyToken } from "@/lib/jwt"
-import { readJSON, writeJSON } from "@/lib/fs"
+import { getDatabase } from "@/lib/mongodb"
+import { ObjectId } from "mongodb"
 
 export async function POST(request: NextRequest) {
   try {
@@ -10,20 +11,27 @@ export async function POST(request: NextRequest) {
     const payload = verifyToken(token)
     if (!payload) return NextResponse.json({ error: "Invalid token" }, { status: 401 })
 
-    const streaks = await readJSON("streak.json")
-    const userStreakIndex = streaks.findIndex((s: any) => s.userId === payload.id)
+    const db = await getDatabase()
+    const streaksCollection = db.collection("streaks")
 
     const today = new Date().toISOString().split("T")[0]
-    let userStreak = userStreakIndex >= 0 ? streaks[userStreakIndex] : null
+    const userStreak = await streaksCollection.findOne({ userId: new ObjectId(payload.id) })
 
     if (!userStreak) {
-      userStreak = {
-        userId: payload.id,
+      // Create new streak
+      const newStreak = {
+        userId: new ObjectId(payload.id),
         streak: 1,
         lastCheckIn: today,
         badges: [],
+        createdAt: new Date(),
       }
-      streaks.push(userStreak)
+      const result = await streaksCollection.insertOne(newStreak)
+      return NextResponse.json({
+        ...newStreak,
+        id: result.insertedId.toString(),
+        userId: newStreak.userId.toString(),
+      })
     } else {
       const lastCheckIn = userStreak.lastCheckIn
       const lastDate = new Date(lastCheckIn)
@@ -32,28 +40,44 @@ export async function POST(request: NextRequest) {
 
       if (daysDiff === 0) {
         return NextResponse.json({ message: "Already checked in today" }, { status: 200 })
-      } else if (daysDiff === 1) {
-        userStreak.streak += 1
-      } else {
-        userStreak.streak = 1
       }
 
-      userStreak.lastCheckIn = today
+      let newStreakCount = userStreak.streak
+      if (daysDiff === 1) {
+        newStreakCount += 1
+      } else {
+        newStreakCount = 1
+      }
 
-      // Award badges
+      const badges = userStreak.badges || []
       const badgeMilestones = [3, 7, 14, 30]
       badgeMilestones.forEach((milestone) => {
-        if (userStreak.streak === milestone && !userStreak.badges.includes(milestone)) {
-          userStreak.badges.push(milestone)
+        if (newStreakCount === milestone && !badges.includes(milestone)) {
+          badges.push(milestone)
         }
       })
 
-      streaks[userStreakIndex] = userStreak
-    }
+      const result = await streaksCollection.findOneAndUpdate(
+        { userId: new ObjectId(payload.id) },
+        {
+          $set: {
+            streak: newStreakCount,
+            lastCheckIn: today,
+            badges,
+            updatedAt: new Date(),
+          },
+        },
+        { returnDocument: "after" },
+      )
 
-    await writeJSON("streak.json", streaks)
-    return NextResponse.json(userStreak, { status: 200 })
+      return NextResponse.json({
+        ...result.value,
+        id: result.value._id.toString(),
+        userId: result.value.userId.toString(),
+      })
+    }
   } catch (error: any) {
+    console.error("[v0] Check-in error:", error)
     return NextResponse.json({ error: error.message }, { status: 400 })
   }
 }
